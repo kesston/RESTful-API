@@ -109,4 +109,3 @@ const PORT = parseInt(process.argv[2] || process.env.APP_PORT) || 3000;
 app.listen(PORT, () => {
 	console.info(`Application started on port ${PORT} at ${new Date()}`);
 });
-
