@@ -3,7 +3,7 @@ const fs = require('fs');
 
 
 //load the library
-const preconditions = required("express-precondions");
+const preconditions = require("express-preconditions");
 
 
 const cors = require('cors');
@@ -17,8 +17,7 @@ const schemaValidator = new Validator({ allErrors: true, verbose: true });
 
 const express = require('express')
 
-// disable express
-app.set("etag", false)
+
 
 const data = require('./zips')
 const CitiesDB = require('./zipsdb')
@@ -27,6 +26,9 @@ const CitiesDB = require('./zipsdb')
 const db = CitiesDB(data);
 
 const app = express();
+
+// disable express
+app.set("etag", false)
 
 app.use(cors());
 app.use(express.json());
@@ -39,7 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // TODO 1/2 Load schemas
 new OpenAPIValidator({
-    apiSpec: join(__dirname, "schema", "zips.ymal")
+    apiSpec: join(__dirname, "schema", "zips.yaml")
 }).install(app)
     .then(() => {
 
@@ -58,7 +60,7 @@ new OpenAPIValidator({
             }
         )
 
-        const Optional = {
+        const options = {
             stateAsync: (req) => {
                 const state = req.params.state
                 const limit = parseInt(req.req.limit) || 10;
@@ -158,5 +160,12 @@ new OpenAPIValidator({
             resp.status(400).type('application/json').json({ error: error });
 
         });
+
+        app.listen(3000, ()=> {
+            console.info("Application started on port 3000")
+        })
     }
-    )
+)
+.catch(error => {
+    console.error("error: ", error)
+})

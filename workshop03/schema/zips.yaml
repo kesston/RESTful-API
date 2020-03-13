@@ -1,4 +1,4 @@
-openapi: 
+openapi: "3.0.3"
 info: 
   title: "Zips Rest ApI"
   description: "My First API"
@@ -44,7 +44,7 @@ components:
                   "AR", "OK", "TX", "CO", "WY", "ID", "UT", "AZ", "NM", 
                   "NV", "CA", "HI", "OR", "WA", "AK" ] 
 
-  city:
+    city:
       type: object
       properties:
         _id:
@@ -127,8 +127,8 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/city"
-
-​/api/states:
+                  
+  /api/states:
       get:
         description: Get a list of all the states
         operationId: getStates
